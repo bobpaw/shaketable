@@ -6,6 +6,7 @@ import random
 
 def killchannel(channel):
 	gpio.output(10,0)
+
 gpio.setmode(gpio.BCM)
 gpio.setup(10, gpio.OUT)
 gpio.setup(9, gpio.IN)
