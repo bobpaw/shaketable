@@ -6,6 +6,7 @@ gpio.cleanup()
 
 gpio.setmode(gpio.BCM)
 
+# List of ports
 enable = 25
 ms1 = 24
 ms2 = 23
@@ -22,6 +23,7 @@ alive = True
 def stopmotor (port):
 	global alive
 	alive = False
+	print("Motor stopped")
 	gpio.output(sleep, gpio.HIGH)
 
 # Setup Ports
@@ -31,10 +33,11 @@ gpio.output(direction, gpio.HIGH)
 gpio.output(step, gpio.LOW)
 gpio.output(enable, gpio.HIGH)
 
+# Add interrupts for both limit switches
 gpio.add_event_detect(switchright, gpio.RISING, stopmotor, 20)
 gpio.add_event_detect(switchleft, gpio.RISING, stopmotor, 20)
-gpio.output([ms1,ms2,ms3], gpio.LOW)
 
+# Function to write to driver for different microstep precisions
 def set_step(step, ports):
 	if not isinstance(step, str):
 		return False
