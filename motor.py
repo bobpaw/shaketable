@@ -14,7 +14,8 @@ reset = 27
 sleep = 18
 step = 17
 direction = 4
-button = 5
+switchleft = 12
+switchright = 20
 
 alive = True
 
@@ -25,7 +26,7 @@ def stopmotor (port):
 
 # Setup Ports
 gpio.setup([direction, step, enable, sleep, ms1, ms2, ms3], gpio.OUT)
-gpio.setup(button, gpio.IN)
+gpio.setup([switchright, switchleft], gpio.IN)
 gpio.output(direction, gpio.HIGH)
 gpio.output(step, gpio.LOW)
 gpio.output(enable, gpio.HIGH)
