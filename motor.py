@@ -1,8 +1,3 @@
-# A1 is red
-# A2 is blue
-# 
-# 
-
 import RPi.GPIO as gpio
 import time
 
@@ -23,13 +18,10 @@ button = 5
 
 alive = True
 
-def killme (port):
+def stopmotor (port):
 	global alive
 	alive = False
 	gpio.output(sleep, gpio.HIGH)
-
-def caught (port):
-	print("caught")
 
 # Setup Ports
 gpio.setup([direction, step, enable, sleep, ms1, ms2, ms3], gpio.OUT)
@@ -38,8 +30,8 @@ gpio.output(direction, gpio.HIGH)
 gpio.output(step, gpio.LOW)
 gpio.output(enable, gpio.HIGH)
 
-#gpio.add_event_detect(button, gpio.RISING, killme, 20)
-gpio.add_event_detect(5, gpio.BOTH, caught)
+gpio.add_event_detect(switchright, gpio.RISING, stopmotor, 20)
+gpio.add_event_detect(switchleft, gpio.RISING, stopmotor, 20)
 gpio.output([ms1,ms2,ms3], gpio.LOW)
 
 def set_step(step, ports):
