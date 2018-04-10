@@ -19,7 +19,7 @@ switchleft = 12
 switchright = 20
 
 alive = True
-delaytime = .05
+delaytime = .01
 
 # Interrupt to stop motor
 def stopmotor (port):
@@ -51,7 +51,7 @@ def set_step(step, ports):
 	return True
 
 # Setup Ports
-gpio.setup([direction, step, enable, sleep, ms1, ms2, ms3], gpio.OUT)
+gpio.setup([direction, step, reset, enable, sleep, ms1, ms2, ms3], gpio.OUT)
 gpio.setup([switchright, switchleft], gpio.IN)
 gpio.output(direction, gpio.HIGH)
 gpio.output(step, gpio.LOW)
@@ -65,7 +65,8 @@ gpio.output(reset, gpio.HIGH)
 gpio.add_event_detect(switchright, gpio.RISING, stopmotor, 20)
 gpio.add_event_detect(switchleft, gpio.RISING, stopmotor, 20)
 
-set_step("full", [ms1,ms2,ms3])
+set_step(4, [ms1,ms2,ms3])
+
 try:
 	while True:
 		gpio.output(step, gpio.HIGH)
