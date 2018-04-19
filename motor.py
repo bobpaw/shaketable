@@ -1,5 +1,6 @@
 import RPi.GPIO as gpio
 import time
+import random
 
 gpio.setwarnings(False)
 gpio.cleanup()
@@ -18,6 +19,7 @@ direction = 4
 switchleft = 12
 switchright = 20
 
+iteration = 0
 alive = True
 delaytime = .01
 
@@ -65,10 +67,16 @@ gpio.output(reset, gpio.HIGH)
 gpio.add_event_detect(switchright, gpio.RISING, stopmotor, 20)
 gpio.add_event_detect(switchleft, gpio.RISING, stopmotor, 20)
 
-set_step(4, [ms1,ms2,ms3])
-
 try:
 	while True:
+		iteration += 1
+		if iteration % 10 == 0:
+			iteration = 0
+			a = [2 ** i for i in range(5)][random.randint(0, 4)]
+			print(a)
+			gpio.output(enable, gpio.HIGH)
+			set_step(a, [ms1,ms2,ms2])
+			gpio.output(enable, gpio.LOW)
 		gpio.output(step, gpio.HIGH)
 		time.sleep(delaytime)
 		gpio.output(step,gpio.LOW)
