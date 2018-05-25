@@ -2,6 +2,7 @@ import RPi.GPIO as gpio
 import time
 import random
 
+# Ensure GPIO is cleaned up, and don't warn that I'm cleaning without needing to
 gpio.setwarnings(False)
 gpio.cleanup()
 
@@ -70,6 +71,7 @@ gpio.add_event_detect(switchleft, gpio.RISING, stopmotor, 20)
 try:
 	while True:
 		iteration += 1
+		# An attempt at random-ish precision changes
 		if iteration % 10 == 0:
 			iteration = 0
 			a = [2 ** i for i in range(5)][random.randint(0, 4)]
@@ -82,5 +84,6 @@ try:
 		gpio.output(step,gpio.LOW)
 		time.sleep(delaytime)
 except KeyboardInterrupt:
+	# Break for Ctrl-C
 	pass
 gpio.cleanup()
